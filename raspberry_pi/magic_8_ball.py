@@ -2,7 +2,7 @@
 Magic 8-Ball
     for use with Python, version 3 and later
 
-This program interfaces with a SenseHat to display the answer to a
+This program interfaces with a Sense Hat to display the answer to a
 question after being shaken like a magic 8-ball!
 """
 
@@ -12,8 +12,8 @@ question after being shaken like a magic 8-ball!
 
 
 from random import choice
-from sense_hat import SenseHat
-# A carpenter uses tools like a saws and hammers to build a dresser, and he
+from sense_hat import Sense Hat
+# A carpenter uses tools like saws and hammers to build a dresser, and he
 # likely didn't make these tools himself. Likewise, we don't always make the
 # tools we use in computer programming, and here, Python has supplied us with
 # toolsets called "random" and "time". This is because generating random data
@@ -22,10 +22,10 @@ from sense_hat import SenseHat
 # software. In software, these toolsets are often called "libraries".
 #
 # From the "random" library, we want to use "choice", which will pick a 
-# single item at random from a set of items give to "choice".
+# single item at random from a set of items.
 #
-# The SenseHat company has provided a Python library for interfacing with
-# the SenseHat board itself, and appropriately, they have called their library
+# The Sense Hat company has provided a Python library for interfacing with
+# the Sense Hat board itself, and appropriately, they have called their library
 # "sense_hat".
 
 
@@ -40,7 +40,7 @@ colors = {
     'black': (0, 0, 0),
     'grey': (128, 128, 128)
 }
-# The SenseHat has a 64-dot display that can show millions of different
+# The Sense Hat has a 64-dot display that can show millions of different
 # colors, and we've named just a few here.
 # In modern electronics, colors are formed by combining red, green, and blue
 # lights in different proportions. Those proportions are expressed in software
@@ -86,13 +86,13 @@ answers = [
 
 
 scroll_speed = 0.03
-# Adjust this number to change how quickly the text scross by on the SenseHat.
+# Adjust this number to change how quickly the text scross by on the Sense Hat.
 # Lower values are smaller! In my use, 0.06 worked out pretty well for
 # demonstration.
 
 
 sense = SenseHat()
-# This gives Python an actual SenseHat interface to use. If you thought that we
+# This gives Python an actual Sense Hat interface to use. If you thought that we
 # already had this, let me offer this analogy: Using
 #   "from sense_hat import SenseHat" 
 # is like remembering to put the hammer and screwdriver in your toolbelt before
@@ -104,10 +104,10 @@ sense = SenseHat()
 
 sense.show_message(prompt,
                    scroll_speed=scroll_speed)
-# Here, we display the message on the SenseHat's screen by telling the SenseHat
-# to do a trick called "show_message". In progamming languages, these "tricks"
-# are called "functions". At the time we call this function, we also specify
-# the scrolling speed.
+# Here, we display the message on the Sense Hat's screen by telling the
+# Sense Hat to do a trick called "show_message". In progamming languages, these
+# "tricks" are called "functions". At the time we call this function, we 
+# also specify the scrolling speed.
 
 
 while True:
@@ -115,28 +115,29 @@ while True:
 # continuous loop with "while True". The instruction
 #     "while XYZ:"
 # tells Python: "keep doing what I'm about to tell you to do, but only as long
-#                as XYZ holds true. When it's not true anymore, stop doing it."
-# "True" is a Python shorthand for a generic true statement that will always
-# be true, so this is an infinite loop!
+#                as XYZ holds true. When XYZ is not true anymore, stop doing 
+#                it."
+# The word "True" with a capital "T" is a Python shorthand for a generic true
+# statement that will always be true, so this is an infinite loop!
+# Can you think of a Python shorthand for a statement that will never be true?
 
     x, y, z = sense.get_accelerometer_raw().values()
     x = abs(x)
     y = abs(y)
     z = abs(z)
-    # This determines how much how much acceleration the SenseHat is currently
-    # experiencing on each of its three axes: the X, Y, and Z axes. The values
-    # of acceleration go from -1 to 1, and can be decimals like 0.1234. Whether
-    # the value is positive or negative just indicates in which direction about
-    # the axis the SenseHat is accelerating (clockwise or counterclockwise
-    # about the axis). Since we don't really care about direction as much as
-    # amount, we take the absolute value of each of these acceleration values.
+    # This determines how much how much acceleration the Sense Hat is currently
+    # experiencing on each of its three axes: the X, Y, and Z axes. A positive
+    # value indicates clockwise acceleration about an axis, and a negative
+    # number is counterclockwise acceleration. Since we don't care about what
+    # direction it's rotating and only how much it's rotating, we take the
+    # absolute value of X, Y, and Z.
 
-    x_threshold = 0.2
-    y_threshold = 0.2
-    z_threshold = 0.5
+    x_threshold = 2
+    y_threshold = 2
+    z_threshold = 2
     if x > x_threshold and y > y_threshold and z > z_threshold:
         # This part might need some adjustment when you hook it up to your
-        # own SenseHat. Smaller numbers will make the magic 8-ball more
+        # own Sense Hat. Smaller numbers will make the magic 8-ball more
         # sensitive, and larger numbers make it less sensitive. Try it out with
         # various values and see what works for you.
 
@@ -146,20 +147,20 @@ while True:
 
         if 'degrees' in answer:
         # One special answer the magic 8-ball gives will include the real
-        # temperature!...or so SenseHat says. Since only in this case do we 
+        # temperature!...or so Sense Hat says. Since only in this case do we 
         # do something special other than just displaying our pre-written
         # answers, we introduce a conditional statement: "if".
         # Here, Python will see if the word "degrees" is in the answer that
         # was randomly chosen. If it is, we know that we're supposed to fill
-        # in the temperature in the text about to display on the SenseHat.
+        # in the temperature in our answer.
             celsius = int(sense.get_temperature_from_humidity())
-            # This gets the temperature from the SenseHat. Evidently it uses
+            # This gets the temperature from the Sense Hat. Evidently it uses
             # humidity to determine this...so it might not be too accurate.
 
             fahrenheit = (celsius * 9/5) + 32
-            # Of course, the temperature we get from the SenseHat is in Celsius,
-            # because the SenseHat people are scientific types, and all they
-            # do is in metric. We convert to real-people Fahrenheit here.
+            # Of course, the temperature we get from the Sense Hat is in
+            # Celsius, because the Sense Hat people are scientific types, and
+            # all they do is in metric. We convert to Fahrenheit here.
 
             answer = answer % fahrenheit
             # Remember that funny placeholder "%s" from above? We'll use just
@@ -187,6 +188,11 @@ while True:
         # to the "colors" we specified at the beginning of our program. When
         # you want to refer to data stored in a dictionary, we use brackes ([])
         # and the name under which we stored our data.
+    else:
+    # If we didn't detect adequate acceleration,
+        sense.clear()
+        # ...just make sure nothing's displayed on the Sense Hat by issuing the
+        # "clear" function.
 
 # That's it! Feel free to explore by changing the values of some of the things
 # we've set up here, like the colors, answers, and sensitivity.
